@@ -55,6 +55,10 @@ public class RationalNumber extends Number implements Comparable<RationalNumber>
 
     public void setDenominator(long d)
     {
+        if (d == 0)
+        {
+            throw new IllegalArgumentException("Denomiator cannot be zero");
+        }
         this.denominator = d;
     }
 
