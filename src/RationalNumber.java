@@ -1,12 +1,12 @@
 public class RationalNumber extends Number implements Comparable<RationalNumber>
 {
-    private long n;
-    private long d;
+    private long numerator;
+    private long denominator;
 
     public RationalNumber()
     {
-        n = 1;
-        d = 1;
+        numerator = 1;
+        denominator = 1;
     }
 
     public RationalNumber(long numerator, long denominator) throws IllegalArgumentException
@@ -15,59 +15,59 @@ public class RationalNumber extends Number implements Comparable<RationalNumber>
         {
             throw new IllegalArgumentException("Zero cannot be the denominator.");
         }
-        n = numerator;
-        d = denominator;
+        this.numerator = numerator;
+        this.denominator = denominator;
     }
 
     @Override
     public int intValue()
     {
-        return (int) ((double) this.n / (double) this.d);
+        return (int) ((double) this.numerator / (double) this.denominator);
     }
 
     @Override
     public long longValue()
     {
-        return (long) ((double) this.n / (double) this.d);
+        return (long) ((double) this.numerator / (double) this.denominator);
     }
 
     @Override
     public float floatValue()
     {
-        return (float) ((double) this.n / (double) this.d);
+        return (float) ((double) this.numerator / (double) this.denominator);
     }
 
     @Override
     public double doubleValue()
     {
-        return (double) this.n / (double) this.d;
+        return (double) this.numerator / (double) this.denominator;
     }
 
     public long getDenominator()
     {
-        return d;
+        return denominator;
     }
 
     public long getNumerator()
     {
-        return n;
+        return numerator;
     }
 
     public void setDenominator(long d)
     {
-        this.d = d;
+        this.denominator = d;
     }
 
     public void setNumerator(long n)
     {
-        this.n = n;
+        this.numerator = n;
     }
 
     public RationalNumber add(RationalNumber other)
     {
-        long commonDenominator = this.d * other.getDenominator();
-        long numeratorOne = this.n * other.getDenominator();
-        long numeratorTwo = other.getNumerator() * this.d;
+        long commonDenominator = this.denominator * other.getDenominator();
+        long numeratorOne = this.numerator * other.getDenominator();
+        long numeratorTwo = other.getNumerator() * this.denominator;
         RationalNumber number = new RationalNumber(numeratorOne + numeratorTwo, commonDenominator);
         number.reduce();
         return number;
@@ -75,17 +75,17 @@ public class RationalNumber extends Number implements Comparable<RationalNumber>
 
     public RationalNumber multiply(RationalNumber other)
     {
-        long commonDenominator = this.d * other.getDenominator();
-        RationalNumber number = new RationalNumber(this.n * other.getNumerator(), commonDenominator);
+        long commonDenominator = this.denominator * other.getDenominator();
+        RationalNumber number = new RationalNumber(this.numerator * other.getNumerator(), commonDenominator);
         number.reduce();
         return number;
     }
 
     public RationalNumber subtract(RationalNumber other)
     {
-        long commonDenominator = this.d * other.getDenominator();
-        long numeratorOne = this.n * other.getDenominator();
-        long numeratorTwo = other.getNumerator() * this.d;
+        long commonDenominator = this.denominator * other.getDenominator();
+        long numeratorOne = this.numerator * other.getDenominator();
+        long numeratorTwo = other.getNumerator() * this.denominator;
         RationalNumber number = new RationalNumber(numeratorOne - numeratorTwo, commonDenominator);
         number.reduce();
         return number;
@@ -93,16 +93,16 @@ public class RationalNumber extends Number implements Comparable<RationalNumber>
 
     public RationalNumber divide(RationalNumber other)
     {
-        RationalNumber number = new RationalNumber(this.n * other.getDenominator(), this.d * other.getNumerator());
+        RationalNumber number = new RationalNumber(this.numerator * other.getDenominator(), this.denominator * other.getNumerator());
         number.reduce();
         return number;
     }
 
     public void reduce()
     {
-        long gcd = gcd(this.n, this.d);
-        this.n = this.n / gcd;
-        this.d = this.d / gcd;
+        long gcd = gcd(this.numerator, this.denominator);
+        this.numerator = this.numerator / gcd;
+        this.denominator = this.denominator / gcd;
     }
 
     private long gcd(long n, long d)
@@ -119,10 +119,10 @@ public class RationalNumber extends Number implements Comparable<RationalNumber>
     {
         this.reduce();
         other.reduce();
-        if (this.n * other.getDenominator() == other.getNumerator() * this.d)
+        if (this.numerator * other.getDenominator() == other.getNumerator() * this.denominator)
         {
             return 0;
-        } else if (this.n * other.getDenominator() > other.getNumerator() * this.d)
+        } else if (this.numerator * other.getDenominator() > other.getNumerator() * this.denominator)
         {
             return 1;
         } else
@@ -134,6 +134,6 @@ public class RationalNumber extends Number implements Comparable<RationalNumber>
     @Override
     public String toString()
     {
-        return n + "/" + d;
+        return numerator + "/" + denominator;
     }
 }
